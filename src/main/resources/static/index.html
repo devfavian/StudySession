@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>Study Sessions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --fg: #111827;
+      --accent: #2563eb;
+      --accent-soft: #dbeafe;
+      --border: #e5e7eb;
+      --danger: #b91c1c;
+      --success: #15803d;
+      --radius-lg: 12px;
+      --radius-xl: 18px;
+      --shadow-soft: 0 10px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top left, #e0f2fe, #f9fafb 50%);
+      color: var(--fg);
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .app {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: baseline;
+      margin-bottom: 24px;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    header h1 span.logo-dot {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    header p {
+      color: #6b7280;
+      font-size: 0.95rem;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.5fr);
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: white;
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-soft);
+      padding: 18px 18px 20px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .pill {
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #1d4ed8;
+      font-weight: 500;
+    }
+
+    .card-subtitle {
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+
+    .badge {
+      font-size: 0.75rem;
+      padding: 1px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      color: #6b7280;
+      background: #f9fafb;
+    }
+
+    /* FORM */
+    form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 14px;
+      margin-top: 6px;
+    }
+
+    @media (max-width: 600px) {
+      form {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 0.9rem;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-weight: 500;
+      color: #374151;
+    }
+
+    label span.required {
+      color: var(--danger);
+      margin-left: 2px;
+    }
+
+    input,
+    textarea,
+    select {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s, transform 0.05s;
+      background-color: #f9fafb;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.2);
+      background-color: #ffffff;
+    }
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+
+    .form-footer {
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      grid-column: 1 / -1;
+    }
+
+    .helper-text {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 8px 18px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+      transition: transform 0.08s ease-out, box-shadow 0.08s ease-out,
+        background 0.15s;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 26px rgba(37, 99, 235, 0.4);
+      background: #1d4ed8;
+    }
+
+    button:active {
+      transform: translateY(0);
+      box-shadow: 0 6px 14px rgba(37, 99, 235, 0.35);
+    }
+
+    button[disabled] {
+      opacity: 0.75;
+      cursor: default;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #111827;
+      box-shadow: none;
+    }
+
+    .btn-secondary:hover {
+      background: #d1d5db;
+      box-shadow: none;
+    }
+
+    /* ALERTS */
+    .alert {
+      border-radius: var(--radius-lg);
+      padding: 8px 10px;
+      font-size: 0.85rem;
+      margin-top: 10px;
+      display: none;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .alert-icon {
+      font-size: 1rem;
+      line-height: 1;
+      margin-top: 1px;
+    }
+
+    .alert-message {
+      flex: 1;
+    }
+
+    .alert-error {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #7f1d1d;
+    }
+
+    .alert-success {
+      background: #ecfdf3;
+      border: 1px solid #bbf7d0;
+      color: #14532d;
+    }
+
+    /* FILTER BAR */
+    .filters {
+      display: grid;
+      grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+      gap: 12px;
+      margin-bottom: 10px;
+      align-items: end;
+    }
+
+    @media (max-width: 700px) {
+      .filters {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .filters-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .filters-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    /* TABLE */
+    .table-wrapper {
+      margin-top: 8px;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      background: #f9fafb;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    thead {
+      background: #f3f4f6;
+    }
+
+    th,
+    td {
+      padding: 8px 10px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    th {
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #6b7280;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #f9fafb;
+    }
+
+    tbody tr:hover {
+      background: #e5f0ff;
+    }
+
+    .tag-focus {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      background: #eef2ff;
+      color: #3730a3;
+      font-weight: 500;
+    }
+
+    .tag-focus-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 999px;
+      background: #4f46e5;
+    }
+
+    .empty-state {
+      padding: 16px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+
+    .status-bar {
+      margin-top: 6px;
+      font-size: 0.8rem;
+      color: #6b7280;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .status-bar span {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div>
+        <h1>
+          <span class="logo-dot"></span>
+          Study Sessions
+        </h1>
+        <p>Gestisci le tue sessioni di studio usando il backend Spring che hai già creato.</p>
+      </div>
+      <p class="badge">
+        API:
+        <code>GET /sessions</code>,
+        <code>/sessions/inorder</code>,
+        <code>/sessions/inorderreversed</code>,
+        <code>/sessions/findbyid/{id}</code>,
+        <code>/sessions/findbysubject/{subject}</code>
+        · <code>POST /sessions</code>
+      </p>
+    </header>
+
+    <main class="layout">
+      <!-- FORM CARD -->
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">
+              Nuova sessione
+              <span class="pill">Crea</span>
+            </h2>
+            <p class="card-subtitle">
+              Compila i campi obbligatori e invia per salvare una sessione.
+            </p>
+          </div>
+        </div>
+
+        <form id="session-form">
+          <div class="form-group full">
+            <label for="subject">
+              Materia / Argomento
+              <span class="required">*</span>
+            </label>
+            <input
+              id="subject"
+              name="subject"
+              type="text"
+              placeholder="Es. Programmazione Java"
+              minlength="3"
+              maxlength="50"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="date">
+              Data
+              <span class="required">*</span>
+            </label>
+            <input id="date" name="date" type="date" required />
+          </div>
+
+          <div class="form-group">
+            <label for="duration">
+              Durata (minuti)
+              <span class="required">*</span>
+            </label>
+            <input
+              id="duration"
+              name="duration"
+              type="number"
+              min="1"
+              max="600"
+              step="1"
+              placeholder="es. 90"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="focus">
+              Livello di focus (1–5)
+              <span style="font-weight:400;color:#6b7280;">(opzionale)</span>
+            </label>
+            <select id="focus" name="focus">
+              <option value="">Nessuno (decidi tu da backend)</option>
+              <option value="1">1 - Distratto</option>
+              <option value="2">2</option>
+              <option value="3">3 - Normale</option>
+              <option value="4">4</option>
+              <option value="5">5 - Super concentrato</option>
+            </select>
+          </div>
+
+          <div class="form-group full">
+            <label for="note">Note (opzionali)</label>
+            <textarea
+              id="note"
+              name="note"
+              placeholder="Es. Luogo, metodo di studio, appunti vari…"
+            ></textarea>
+          </div>
+
+          <div class="form-footer">
+            <p class="helper-text">
+              I campi contrassegnati con <span class="required">*</span> sono obbligatori.
+            </p>
+            <button type="submit" id="submit-btn">
+              Salva sessione
+              <span aria-hidden="true">➤</span>
+            </button>
+          </div>
+        </form>
+
+        <div id="form-error" class="alert alert-error">
+          <span class="alert-icon">⚠️</span>
+          <div class="alert-message">
+            <strong>Errore:</strong>
+            <span id="form-error-text"></span>
+          </div>
+        </div>
+
+        <div id="form-success" class="alert alert-success">
+          <span class="alert-icon">✅</span>
+          <div class="alert-message">
+            <strong>Sessione creata!</strong>
+            <span id="form-success-text">La lista è stata aggiornata.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- LIST + FILTERS CARD -->
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">
+              Sessioni salvate
+              <span class="pill" id="count-pill">0 sessioni</span>
+            </h2>
+            <p class="card-subtitle">
+              Usa i filtri per cercare per ID, subject o ordinare per data.
+            </p>
+          </div>
+        </div>
+
+        <!-- FILTRI / SEARCH & ORDER -->
+        <div class="filters">
+          <div>
+            <div class="form-group full">
+              <label for="filter-id">Cerca per ID (usa <code>findbyid</code>)</label>
+              <input
+                id="filter-id"
+                type="number"
+                min="1"
+                placeholder="Es. 1"
+              />
+            </div>
+          </div>
+          <div>
+            <div class="filters-row">
+              <div class="form-group">
+                <label for="filter-subject">Cerca per subject (usa <code>findbysubject</code>)</label>
+                <input
+                  id="filter-subject"
+                  type="text"
+                  placeholder="Es. Java"
+                />
+              </div>
+              <div class="form-group">
+                <label for="filter-order-date">Ordinamento per data (solo senza filtri)</label>
+                <select id="filter-order-date">
+                  <option value="">Nessun ordinamento (endpoint /sessions)</option>
+                  <option value="asc">Data crescente (/sessions/inorder)</option>
+                  <option value="desc">Data decrescente (/sessions/inorderreversed)</option>
+                </select>
+              </div>
+            </div>
+            <div class="filters-row" style="margin-top:6px; align-items:center;">
+              <div></div>
+              <div class="filters-actions">
+                <button type="button" class="btn-secondary" id="btn-clear-filters">
+                  Pulisci
+                </button>
+                <button type="button" id="btn-apply-filters">
+                  Applica
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Materia</th>
+                <th>Data</th>
+                <th>Durata</th>
+                <th>Focus</th>
+                <th>Note</th>
+              </tr>
+            </thead>
+            <tbody id="sessions-body">
+              <tr>
+                <td colspan="6" class="empty-state">
+                  Nessuna sessione ancora presente. Creane una dalla scheda a sinistra.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="status-bar">
+          <span>
+            <span class="dot"></span>
+            <span id="status-text">In attesa di dati dal server…</span>
+          </span>
+          <span id="last-refresh"></span>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const API_BASE = ""; // vuoto = stesso host (es. http://localhost:8080)
+
+    const form = document.getElementById("session-form");
+    const btnSubmit = document.getElementById("submit-btn");
+    const errorBox = document.getElementById("form-error");
+    const errorText = document.getElementById("form-error-text");
+    const successBox = document.getElementById("form-success");
+    const successText = document.getElementById("form-success-text");
+    const sessionsBody = document.getElementById("sessions-body");
+    const countPill = document.getElementById("count-pill");
+    const statusText = document.getElementById("status-text");
+    const lastRefresh = document.getElementById("last-refresh");
+
+    const filterId = document.getElementById("filter-id");
+    const filterSubject = document.getElementById("filter-subject");
+    const filterOrderDate = document.getElementById("filter-order-date");
+    const btnApplyFilters = document.getElementById("btn-apply-filters");
+    const btnClearFilters = document.getElementById("btn-clear-filters");
+
+    function showError(message) {
+      errorText.textContent = message;
+      errorBox.style.display = "flex";
+      successBox.style.display = "none";
+    }
+
+    function showSuccess(message) {
+      successText.textContent = message;
+      successBox.style.display = "flex";
+      errorBox.style.display = "none";
+    }
+
+    function clearAlerts() {
+      errorBox.style.display = "none";
+      successBox.style.display = "none";
+    }
+
+    function formatDate(value) {
+      if (!value) return "";
+      let d;
+
+      if (typeof value === "number") {
+        d = new Date(value);
+      } else if (typeof value === "string") {
+        d = new Date(value);
+      } else {
+        return String(value);
+      }
+
+      if (isNaN(d)) return String(value);
+      return d.toLocaleDateString("it-IT", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      });
+    }
+
+    function formatDuration(minutes) {
+      if (minutes == null) return "";
+      const m = Number(minutes);
+      if (!Number.isFinite(m)) return String(minutes);
+      if (m < 60) return m + " min";
+      const h = Math.floor(m / 60);
+      const rest = m % 60;
+      return rest ? `${h} h ${rest} min` : `${h} h`;
+    }
+
+    function updateTable(sessions) {
+      sessionsBody.innerHTML = "";
+
+      if (!sessions || sessions.length === 0) {
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        td.colSpan = 6;
+        td.className = "empty-state";
+        td.textContent =
+          "Nessuna sessione trovata. Modifica filtri o aggiungi una nuova sessione.";
+        tr.appendChild(td);
+        sessionsBody.appendChild(tr);
+        countPill.textContent = "0 sessioni";
+        return;
+      }
+
+      sessions.forEach((s) => {
+        const tr = document.createElement("tr");
+
+        const tdId = document.createElement("td");
+        tdId.textContent = s.id ?? "—";
+
+        const tdSubject = document.createElement("td");
+        tdSubject.textContent = s.subject ?? "";
+
+        const tdDate = document.createElement("td");
+        tdDate.textContent = formatDate(s.date);
+
+        const tdDuration = document.createElement("td");
+        tdDuration.textContent = formatDuration(s.duration);
+
+        const tdFocus = document.createElement("td");
+        if (s.focuslvl != null) {
+          const spanFocus = document.createElement("span");
+          spanFocus.className = "tag-focus";
+          const dot = document.createElement("span");
+          dot.className = "tag-focus-dot";
+          const text = document.createElement("span");
+          text.textContent = `Lv ${s.focuslvl}`;
+          spanFocus.appendChild(dot);
+          spanFocus.appendChild(text);
+          tdFocus.appendChild(spanFocus);
+        } else {
+          tdFocus.textContent = "—";
+        }
+
+        const tdNote = document.createElement("td");
+        tdNote.textContent = s.note || "";
+
+        tr.appendChild(tdId);
+        tr.appendChild(tdSubject);
+        tr.appendChild(tdDate);
+        tr.appendChild(tdDuration);
+        tr.appendChild(tdFocus);
+        tr.appendChild(tdNote);
+
+        sessionsBody.appendChild(tr);
+      });
+
+      const n = sessions.length;
+      countPill.textContent = n === 1 ? "1 sessione" : `${n} sessioni`;
+    }
+
+    async function loadSessions() {
+      statusText.textContent = "Caricamento in corso…";
+
+      const idVal = filterId.value.trim();
+      const subjectVal = filterSubject.value.trim();
+      const orderVal = filterOrderDate.value; // "", "asc", "desc"
+
+      let url = API_BASE + "/sessions"; // default
+
+      // PRIORITÀ:
+      // 1) se c'è ID → /sessions/findbyid/{id}
+      // 2) altrimenti, se c'è subject → /sessions/findbysubject/{subject}
+      // 3) altrimenti, usa ordinamento per data (endpoint diversi)
+      if (idVal) {
+        url = API_BASE + "/sessions/findbyid/" + encodeURIComponent(idVal);
+      } else if (subjectVal) {
+        url =
+          API_BASE +
+          "/sessions/findbysubject/" +
+          encodeURIComponent(subjectVal);
+      } else {
+        if (orderVal === "asc") {
+          url = API_BASE + "/sessions/inorder";
+        } else if (orderVal === "desc") {
+          url = API_BASE + "/sessions/inorderreversed";
+        } else {
+          url = API_BASE + "/sessions";
+        }
+      }
+
+      try {
+        const res = await fetch(url);
+        if (!res.ok) {
+          throw new Error("Errore dal server: " + res.status);
+        }
+
+        const data = await res.json();
+
+        // findbyid può restituire un singolo oggetto: lo trasformo in array
+        let list;
+        if (Array.isArray(data)) {
+          list = data;
+        } else if (data) {
+          list = [data];
+        } else {
+          list = [];
+        }
+
+        updateTable(list);
+        statusText.textContent = "Elenco aggiornato dal server";
+        const now = new Date();
+        lastRefresh.textContent =
+          "Ultimo aggiornamento: " +
+          now.toLocaleTimeString("it-IT", {
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+          });
+      } catch (err) {
+        statusText.textContent = "Impossibile caricare le sessioni.";
+        console.error(err);
+      }
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      clearAlerts();
+
+      const subject = document.getElementById("subject").value.trim();
+      const dateVal = document.getElementById("date").value;
+      const durationVal = document.getElementById("duration").value;
+      const focusVal = document.getElementById("focus").value;
+      const note = document.getElementById("note").value.trim();
+
+      if (!subject || !dateVal || !durationVal) {
+        showError("Compila tutti i campi obbligatori.");
+        return;
+      }
+
+      const duration = Number(durationVal);
+      const dateISO = new Date(dateVal).toISOString();
+
+      const payload = {
+        subject,
+        date: dateISO,
+        duration,
+        note: note || null,
+      };
+
+      // focus opzionale: lo aggiungo solo se valorizzato
+      if (focusVal) {
+        payload.focuslvl = Number(focusVal);
+      }
+
+      btnSubmit.disabled = true;
+      btnSubmit.textContent = "Salvataggio…";
+
+      try {
+        const res = await fetch(API_BASE + "/sessions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+
+        if (!res.ok) {
+          let errMsg = "Errore generico durante il salvataggio.";
+          try {
+            const body = await res.json();
+            if (body && body.message) {
+              errMsg = body.message;
+            } else if (body && body.error) {
+              errMsg = body.error;
+            }
+          } catch (e) {
+            // risposta non JSON
+          }
+          throw new Error(errMsg);
+        }
+
+        const created = await res.json();
+        showSuccess("Sessione creata (ID " + created.id + ").");
+
+        // reset del form
+        document.getElementById("subject").value = "";
+        document.getElementById("duration").value = "";
+        document.getElementById("focus").value = "";
+        document.getElementById("note").value = "";
+
+        await loadSessions();
+      } catch (err) {
+        console.error(err);
+        showError(err.message || "Errore sconosciuto.");
+      } finally {
+        btnSubmit.disabled = false;
+        btnSubmit.textContent = "Salva sessione";
+      }
+    });
+
+    // FILTRI: applica / pulisci
+    btnApplyFilters.addEventListener("click", () => {
+      loadSessions();
+    });
+
+    btnClearFilters.addEventListener("click", () => {
+      filterId.value = "";
+      filterSubject.value = "";
+      filterOrderDate.value = "";
+      loadSessions();
+    });
+
+    // Enter nei campi di filtro → applica
+    [filterId, filterSubject].forEach((input) => {
+      input.addEventListener("keyup", (e) => {
+        if (e.key === "Enter") {
+          loadSessions();
+        }
+      });
+    });
+
+    // primo caricamento
+    loadSessions();
+  </script>
+</body>
+</html>
