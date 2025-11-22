@@ -1,4 +1,4 @@
-package com.favian;
+package dto;
 
 import java.util.Date;
 
@@ -49,7 +49,7 @@ public class Session {
 		return duration;
 	}
 
-	public void setDuration(int duration) {
+	public void setDuration(Integer duration) {
 		this.duration = duration;
 	}
 
@@ -57,7 +57,7 @@ public class Session {
 		return focuslvl;
 	}
 
-	public void setFocuslvl(int focuslvl) {
+	public void setFocuslvl(Integer focuslvl) {
 		this.focuslvl = focuslvl;
 	}
 

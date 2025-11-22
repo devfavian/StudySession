@@ -1,4 +1,4 @@
-package com.favian;
+package controller;
 
 import java.util.List;
 
@@ -9,14 +9,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import dto.Session;
+import repository.SessionRepositoryInterface;
+import services.SessionServicesInterface;
+
 @RestController
 @RequestMapping("/sessions")
 public class SessionController {
 	
-	private final SessionRepository memory;
-	
-	public SessionController(SessionRepository memory) {
+	private final SessionRepositoryInterface memory;
+	private	final SessionServicesInterface services;
+			
+	public SessionController(SessionRepositoryInterface memory, SessionServicesInterface services) {
 		this.memory = memory;
+		this.services = services;
 	}
 	
 	@GetMapping
@@ -46,18 +52,7 @@ public class SessionController {
 	
 	@PostMapping
 	public Session createSession(@RequestBody Session s) {
-		
-		//if null
-		if(s.getSubject() == null || s.getSubject().isBlank())	throw new SessionMissingData("subject");
-		if(s.getDate() == null)		throw new SessionMissingData("date");
-		if(s.getDuration() == null) throw new SessionMissingData("durationMinutes");
-		if(s.getFocuslvl() == null) s.setFocuslvl(2);
-		
-		//conditions
-		if(s.getSubject().length() > 50 || s.getSubject().length() < 3) throw new SessionInvalidField("subject");
-		if(s.getDuration() > 600 || s.getDuration() < 1) throw new SessionInvalidField("durationMinutes");
-		if(s.getFocuslvl() > 5 || s.getFocuslvl() < 1) throw new SessionInvalidField("focusLevel");
-		
+		services.validate(s);
 		return memory.save(s);
 	}
 }

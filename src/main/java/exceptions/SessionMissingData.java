@@ -1,4 +1,4 @@
-package com.favian;
+package exceptions;
 
 import java.util.Date;
 
