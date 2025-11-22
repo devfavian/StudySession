@@ -1,566 +1,137 @@
-# \# StudySession -- Simple Study Tracking API / API per tracciare sessioni di studio
+# StudySession – Simple Study Tracking API / API per tracciare sessioni di studio
 
-# 
+---
 
-# \## 🇬🇧 English# StudySession -- Simple Study Tracking API / API per tracciare sessioni di studio
+## 🇬🇧 English
 
-# 
+StudySession is a lightweight Spring Boot application that allows users to record, validate, and retrieve study sessions through a clean REST API.  
+It is designed as a compact learning project focused on API design, validation, custom error handling, and basic in-memory persistence.
 
-# \## 🇬🇧 English
+---
 
-# 
+### 🚀 Features
 
-# StudySession is a lightweight Spring Boot application that allows users
+- Create study sessions via a POST endpoint  
+- List all saved sessions  
+- Validation for required fields and constraints:
+  - subject (3–50 chars)
+  - date (non-null)
+  - duration (1–600 min)
+  - focus level (1–5)
+- Default focus level set to **2** if omitted  
+- Custom exceptions for missing or invalid fields  
+- Centralized error handling with `@RestControllerAdvice`  
+- In-memory repository for storing sessions
 
-# to record, validate, and retrieve study sessions through a clean REST
+---
 
-# API.\\
+### 📡 API Endpoints
 
-# It is designed as a compact learning project focused on API design,
+#### ➤ Create a new study session  
+**POST /sessions**
 
-# validation, custom error handling, and basic in-memory persistence.
+Example request:
 
-# 
+```json
+{
+  "subject": "Mathematics",
+  "duration": 90,
+  "date": "2025-01-22T14:00:00",
+  "focuslvl": 3
+}
+```
 
-# ------------------------------------------------------------------------
+#### ➤ Retrieve all sessions  
+**GET /sessions**
 
-# 
+---
 
-# \## 🚀 Features
+### 🛠️ Technologies Used
 
-# 
+- Java 21+  
+- Spring Boot  
+- Spring Web  
+- In-memory storage (HashMap)
 
-# \-   Create study sessions via a POST endpoint\\
+---
 
-# \-   List all saved sessions\\
+### 📦 How to Run
 
-# \-   Validation for required fields and constraints:
+```bash
+./mvnw spring-boot:run
+```
 
-# &nbsp;   -   subject (3--50 chars)
+Then visit:
 
-# &nbsp;   -   date (non-null)
+```
+http://localhost:8080/sessions
+```
 
-# &nbsp;   -   duration (1--600 min)
+---
 
-# &nbsp;   -   focus level (1--5)
+---
 
-# \-   Default focus level (2) if omitted\\
+## 🇮🇹 Italiano
 
-# \-   Custom exceptions for missing or invalid fields\\
+StudySession è una piccola applicazione Spring Boot che permette di registrare, validare e recuperare sessioni di studio tramite una REST API semplice e pulita.  
+È pensata come progetto didattico per esercitarsi con design delle API, validazione, gestione degli errori ed una persistenza in memoria.
 
-# \-   Centralized error handling with `@RestControllerAdvice`\\
+---
 
-# \-   In-memory repository for storing sessions
+### 🚀 Funzionalità
 
-# 
+- Creazione di sessioni di studio tramite endpoint POST  
+- Recupero di tutte le sessioni salvate  
+- Validazione con vincoli su:
+  - subject (3–50 caratteri)
+  - date (non nulla)
+  - duration (1–600 minuti)
+  - focus level (1–5)
+- Default automatico del focus level a **2**  
+- Eccezioni personalizzate per campi mancanti o invalidi  
+- Gestione centralizzata degli errori con `@RestControllerAdvice`  
+- Repository in memoria
 
-# ------------------------------------------------------------------------
+---
 
-# 
+### 📡 Endpoint API
 
-# \## 📡 API Endpoints
+#### ➤ Creare una nuova sessione  
+**POST /sessions**
 
-# 
+Esempio:
 
-# \### ➤ Create a new study session
+```json
+{
+  "subject": "Matematica",
+  "duration": 90,
+  "date": "2025-01-22T14:00:00",
+  "focuslvl": 3
+}
+```
 
-# 
+#### ➤ Recuperare tutte le sessioni  
+**GET /sessions**
 
-# \*\*POST /sessions\*\*
+---
 
-# 
+### 🛠️ Tecnologie usate
 
-# Example request:
+- Java 21+  
+- Spring Boot  
+- Spring Web  
+- Persistenza in memoria (HashMap)
 
-# 
+---
 
-# ``` json
+### 📦 Come eseguire il progetto
 
-# {
+```bash
+./mvnw spring-boot:run
+```
 
-# &nbsp; "subject": "Mathematics",
+Poi visita:
 
-# &nbsp; "duration": 90,
-
-# &nbsp; "date": "2025-01-22T14:00:00",
-
-# &nbsp; "focuslvl": 3
-
-# }
-
-# ```
-
-# 
-
-# \### ➤ Retrieve all sessions
-
-# 
-
-# \*\*GET /sessions\*\*
-
-# 
-
-# ------------------------------------------------------------------------
-
-# 
-
-# \## 🛠️ Technologies Used
-
-# 
-
-# \-   Java 21+\\
-
-# \-   Spring Boot\\
-
-# \-   Spring Web\\
-
-# \-   In-memory storage (HashMap)
-
-# 
-
-# ------------------------------------------------------------------------
-
-# 
-
-# \## 📦 How to Run
-
-# 
-
-# ``` bash
-
-# ./mvnw spring-boot:run
-
-# ```
-
-# 
-
-# Then visit:
-
-# 
-
-# &nbsp;   http://localhost:8080/sessions
-
-# 
-
-# ------------------------------------------------------------------------
-
-# 
-
-# ------------------------------------------------------------------------
-
-# 
-
-# \## 🇮🇹 Italiano
-
-# 
-
-# StudySession è una piccola applicazione Spring Boot che permette di
-
-# registrare, validare e recuperare sessioni di studio tramite una REST
-
-# API semplice e pulita.\\
-
-# È pensata come progetto didattico per esercitarsi con design delle API,
-
-# validazione, gestione degli errori ed una persistenza in memoria.
-
-# 
-
-# ------------------------------------------------------------------------
-
-# 
-
-# \## 🚀 Funzionalità
-
-# 
-
-# \-   Creazione di sessioni di studio tramite endpoint POST\\
-
-# \-   Recupero di tutte le sessioni salvate\\
-
-# \-   Validazione con vincoli su:
-
-# &nbsp;   -   subject (3--50 caratteri)
-
-# &nbsp;   -   date (non nulla)
-
-# &nbsp;   -   duration (1--600 minuti)
-
-# &nbsp;   -   focus level (1--5)
-
-# \-   Default automatico del focus level (2)\\
-
-# \-   Eccezioni personalizzate per campi mancanti o invalidi\\
-
-# \-   Gestione centralizzata degli errori con `@RestControllerAdvice`\\
-
-# \-   Repository in memoria
-
-# 
-
-# ------------------------------------------------------------------------
-
-# 
-
-# \## 📡 Endpoint API
-
-# 
-
-# \### ➤ Creare una nuova sessione
-
-# 
-
-# \*\*POST /sessions\*\*
-
-# 
-
-# Esempio:
-
-# 
-
-# ``` json
-
-# {
-
-# &nbsp; "subject": "Matematica",
-
-# &nbsp; "duration": 90,
-
-# &nbsp; "date": "2025-01-22T14:00:00",
-
-# &nbsp; "focuslvl": 3
-
-# }
-
-# ```
-
-# 
-
-# \### ➤ Recuperare tutte le sessioni
-
-# 
-
-# \*\*GET /sessions\*\*
-
-# 
-
-# ------------------------------------------------------------------------
-
-# 
-
-# \## 🛠️ Tecnologie usate
-
-# 
-
-# \-   Java 21+\\
-
-# \-   Spring Boot\\
-
-# \-   Spring Web\\
-
-# \-   Persistenza in memoria (HashMap)
-
-# 
-
-# ------------------------------------------------------------------------
-
-# 
-
-# \## 📦 Come eseguire il progetto
-
-# 
-
-# ``` bash
-
-# ./mvnw spring-boot:run
-
-# ```
-
-# 
-
-# Poi visita:
-
-# 
-
-# &nbsp;   http://localhost:8080/sessions
-
-
-
-# 
-
-# StudySession is a lightweight Spring Boot application that allows users
-
-# to record, validate, and retrieve study sessions through a clean REST
-
-# API.\\
-
-# It is designed as a compact learning project focused on API design,
-
-# validation, custom error handling, and basic in-memory persistence.
-
-# 
-
-# ------------------------------------------------------------------------
-
-# 
-
-# \## 🚀 Features
-
-# 
-
-# \-   Create study sessions via a POST endpoint\\
-
-# \-   List all saved sessions\\
-
-# \-   Validation for required fields and constraints:
-
-# &nbsp;   -   subject (3--50 chars)
-
-# &nbsp;   -   date (non-null)
-
-# &nbsp;   -   duration (1--600 min)
-
-# &nbsp;   -   focus level (1--5)
-
-# \-   Default focus level (2) if omitted\\
-
-# \-   Custom exceptions for missing or invalid fields\\
-
-# \-   Centralized error handling with `@RestControllerAdvice`\\
-
-# \-   In-memory repository for storing sessions
-
-# 
-
-# ------------------------------------------------------------------------
-
-# 
-
-# \## 📡 API Endpoints
-
-# 
-
-# \### ➤ Create a new study session
-
-# 
-
-# \*\*POST /sessions\*\*
-
-# 
-
-# Example request:
-
-# 
-
-# ``` json
-
-# {
-
-# &nbsp; "subject": "Mathematics",
-
-# &nbsp; "duration": 90,
-
-# &nbsp; "date": "2025-01-22T14:00:00",
-
-# &nbsp; "focuslvl": 3
-
-# }
-
-# ```
-
-# 
-
-# \### ➤ Retrieve all sessions
-
-# 
-
-# \*\*GET /sessions\*\*
-
-# 
-
-# ------------------------------------------------------------------------
-
-# 
-
-# \## 🛠️ Technologies Used
-
-# 
-
-# \-   Java 21+\\
-
-# \-   Spring Boot\\
-
-# \-   Spring Web\\
-
-# \-   In-memory storage (HashMap)
-
-# 
-
-# ------------------------------------------------------------------------
-
-# 
-
-# \## 📦 How to Run
-
-# 
-
-# ``` bash
-
-# ./mvnw spring-boot:run
-
-# ```
-
-# 
-
-# Then visit:
-
-# 
-
-# &nbsp;   http://localhost:8080/sessions
-
-# 
-
-# ------------------------------------------------------------------------
-
-# 
-
-# ------------------------------------------------------------------------
-
-# 
-
-# \## 🇮🇹 Italiano
-
-# 
-
-# StudySession è una piccola applicazione Spring Boot che permette di
-
-# registrare, validare e recuperare sessioni di studio tramite una REST
-
-# API semplice e pulita.\\
-
-# È pensata come progetto didattico per esercitarsi con design delle API,
-
-# validazione, gestione degli errori ed una persistenza in memoria.
-
-# 
-
-# ------------------------------------------------------------------------
-
-# 
-
-# \## 🚀 Funzionalità
-
-# 
-
-# \-   Creazione di sessioni di studio tramite endpoint POST\\
-
-# \-   Recupero di tutte le sessioni salvate\\
-
-# \-   Validazione con vincoli su:
-
-# &nbsp;   -   subject (3--50 caratteri)
-
-# &nbsp;   -   date (non nulla)
-
-# &nbsp;   -   duration (1--600 minuti)
-
-# &nbsp;   -   focus level (1--5)
-
-# \-   Default automatico del focus level (2)\\
-
-# \-   Eccezioni personalizzate per campi mancanti o invalidi\\
-
-# \-   Gestione centralizzata degli errori con `@RestControllerAdvice`\\
-
-# \-   Repository in memoria
-
-# 
-
-# ------------------------------------------------------------------------
-
-# 
-
-# \## 📡 Endpoint API
-
-# 
-
-# \### ➤ Creare una nuova sessione
-
-# 
-
-# \*\*POST /sessions\*\*
-
-# 
-
-# Esempio:
-
-# 
-
-# ``` json
-
-# {
-
-# &nbsp; "subject": "Matematica",
-
-# &nbsp; "duration": 90,
-
-# &nbsp; "date": "2025-01-22T14:00:00",
-
-# &nbsp; "focuslvl": 3
-
-# }
-
-# ```
-
-# 
-
-# \### ➤ Recuperare tutte le sessioni
-
-# 
-
-# \*\*GET /sessions\*\*
-
-# 
-
-# ------------------------------------------------------------------------
-
-# 
-
-# \## 🛠️ Tecnologie usate
-
-# 
-
-# \-   Java 21+\\
-
-# \-   Spring Boot\\
-
-# \-   Spring Web\\
-
-# \-   Persistenza in memoria (HashMap)
-
-# 
-
-# ------------------------------------------------------------------------
-
-# 
-
-# \## 📦 Come eseguire il progetto
-
-# 
-
-# ``` bash
-
-# ./mvnw spring-boot:run
-
-# ```
-
-# 
-
-# Poi visita:
-
-# 
-
-# &nbsp;   http://localhost:8080/sessions
-
-
-
+```
+http://localhost:8080/sessions
+```
