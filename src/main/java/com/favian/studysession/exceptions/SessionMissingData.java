@@ -1,4 +1,4 @@
-package exceptions;
+package com.favian.studysession.exceptions;
 
 import java.util.Date;
 

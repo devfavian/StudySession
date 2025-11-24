@@ -1,6 +1,6 @@
-package services;
+package com.favian.studysession.services;
 
-import dto.Session;
+import com.favian.studysession.dto.Session;
 
 public interface SessionServicesInterface {
 	void isSubjectNull(Session s);

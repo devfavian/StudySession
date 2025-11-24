@@ -1,4 +1,4 @@
-package exceptions;
+package com.favian.studysession.exceptions;
 
 public class SessionInvalidField extends RuntimeException {
 

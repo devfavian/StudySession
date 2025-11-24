@@ -1,8 +1,8 @@
-package repository;
+package com.favian.studysession.repository;
 
 import java.util.List;
 
-import dto.Session;
+import com.favian.studysession.dto.Session;
 
 public interface SessionRepositoryInterface {
 
@@ -14,7 +14,7 @@ public interface SessionRepositoryInterface {
 
 	Session findById(Long id);
 
-	List<Session> FindBySubject(String subject);
+	List<Session> findBySubject(String subject);
 
 	Session save(Session s);
 

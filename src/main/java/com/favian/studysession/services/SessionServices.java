@@ -1,10 +1,10 @@
-package services;
+package com.favian.studysession.services;
 
 import org.springframework.stereotype.Service;
 
-import dto.Session;
-import exceptions.SessionInvalidField;
-import exceptions.SessionMissingData;
+import com.favian.studysession.dto.Session;
+import com.favian.studysession.exceptions.SessionInvalidField;
+import com.favian.studysession.exceptions.SessionMissingData;
 
 @Service
 public class SessionServices implements SessionServicesInterface {

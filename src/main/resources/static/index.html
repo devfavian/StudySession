@@ -292,7 +292,7 @@
       grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
       gap: 12px;
       margin-bottom: 10px;
-      align-items: end;
+      align-items: flex-start;
     }
 
     @media (max-width: 700px) {
@@ -412,7 +412,7 @@
           <span class="logo-dot"></span>
           Study Sessions
         </h1>
-        <p>Gestisci le tue sessioni di studio usando il backend Spring che hai già creato.</p>
+        <p>Gestisci le tue sessioni di studio tramite il backend Spring.</p>
       </div>
       <p class="badge">
         API:
@@ -488,7 +488,7 @@
               <span style="font-weight:400;color:#6b7280;">(opzionale)</span>
             </label>
             <select id="focus" name="focus">
-              <option value="">Nessuno (decidi tu da backend)</option>
+              <option value="">Non specificato</option>
               <option value="1">1 - Distratto</option>
               <option value="2">2</option>
               <option value="3">3 - Normale</option>
@@ -552,7 +552,7 @@
         <div class="filters">
           <div>
             <div class="form-group full">
-              <label for="filter-id">Cerca per ID (usa <code>findbyid</code>)</label>
+              <label for="filter-id">Cerca per ID</label>
               <input
                 id="filter-id"
                 type="number"
@@ -564,7 +564,7 @@
           <div>
             <div class="filters-row">
               <div class="form-group">
-                <label for="filter-subject">Cerca per subject (usa <code>findbysubject</code>)</label>
+                <label for="filter-subject">Cerca per subject</label>
                 <input
                   id="filter-subject"
                   type="text"
@@ -572,11 +572,11 @@
                 />
               </div>
               <div class="form-group">
-                <label for="filter-order-date">Ordinamento per data (solo senza filtri)</label>
+                <label for="filter-order-date">Ordinamento per data</label>
                 <select id="filter-order-date">
-                  <option value="">Nessun ordinamento (endpoint /sessions)</option>
-                  <option value="asc">Data crescente (/sessions/inorder)</option>
-                  <option value="desc">Data decrescente (/sessions/inorderreversed)</option>
+                  <option value="">Nessun ordinamento</option>
+                  <option value="asc">Data crescente</option>
+                  <option value="desc">Data decrescente</option>
                 </select>
               </div>
             </div>
