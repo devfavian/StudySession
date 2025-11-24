@@ -1,6 +1,6 @@
 package com.favian.studysession.exceptions;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class SessionMissingData extends RuntimeException {
 
